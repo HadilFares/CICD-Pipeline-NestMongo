@@ -35,22 +35,15 @@ jobs:
       run: |
         echo "DATABASE_URI=${{ secrets.DATABASE_URI }}" >> $GITHUB_ENV   
     
-    - name: Build Docker images with Docker Compose
-      run: docker-compose -f dockerize-nest-app/docker-compose.yaml build
-      
-    - name: Tag and push Docker images
+    - name: Build   Docker images with Docker Compose
       run: |
-        DOCKERHUB_USERNAME=${{ secrets.DOCKERHUB_USERNAME }}
-        # Tag and push NestJS application image
-        docker tag dockerize-nest-app_nest-app ${DOCKERHUB_USERNAME}/nest-app:latest
-        docker tag dockerize-nest-app_nest-app ${DOCKERHUB_USERNAME}/nest-app:${{ github.sha }}
-        docker push ${DOCKERHUB_USERNAME}/nest-app:latest
-        docker push ${DOCKERHUB_USERNAME}/nest-app:${{ github.sha }}
-        docker tag dockerize-nest-app_db_mongo ${DOCKERHUB_USERNAME}/mongo:latest
-        docker tag dockerize-nest-app_db_mongo ${DOCKERHUB_USERNAME}/mongo:${{ github.sha }}
-        docker push ${DOCKERHUB_USERNAME}/mongo:latest
-        docker push ${DOCKERHUB_USERNAME}/mongo:${{ github.sha }}
-
+        docker-compose -f dockerize-nest-app/docker-compose.yaml build
+        docker-compose -f dockerize-nest-app/docker-compose.yaml images
+    - name: Push Docker images with Docker Compose
+      run: |
+        docker-compose -f dockerize-nest-app/docker-compose.yaml push
+    
+   
     - name: Run Docker Compose
       run:  docker-compose -f dockerize-nest-app/docker-compose.yaml up -d
 
