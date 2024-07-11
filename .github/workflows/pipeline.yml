@@ -34,18 +34,6 @@ jobs:
     - name: Set environment variables
       run: |
         echo "DATABASE_URI=${{ secrets.DATABASE_URI }}" >> $GITHUB_ENV   
-
-   # - name: Build and push the Docker image
-   #   uses: docker/build-push-action@v3
-   #   with:
-    #     context: dockerize-nest-app
-    #     file: dockerize-nest-app/docker-compose.yaml
-     #    push: true
-      #   tags: ${{secrets.DOCKERHUB_USERNAME}}/nest-mongo:latest  
-   # - name: Build Docker images with Docker Compose
-    #  run: |
-      #  docker-compose -f dockerize-nest-app/docker-compose.yaml build \
-      #  --tag ${{ secrets.DOCKERHUB_USERNAME }}/nestmongo:latest
     
     - name: Build Docker images with Docker Compose
       run: docker-compose -f dockerize-nest-app/docker-compose.yaml build
@@ -58,14 +46,10 @@ jobs:
         docker tag dockerize-nest-app_nest-app ${DOCKERHUB_USERNAME}/nest-app:${{ github.sha }}
         docker push ${DOCKERHUB_USERNAME}/nest-app:latest
         docker push ${DOCKERHUB_USERNAME}/nest-app:${{ github.sha }}
-        docker tag dockerize-nest-app_db ${DOCKERHUB_USERNAME}/mongo:latest
-        docker tag dockerize-nest-app_db ${DOCKERHUB_USERNAME}/mongo:${{ github.sha }}
+        docker tag dockerize-nest-app_db_mongo ${DOCKERHUB_USERNAME}/mongo:latest
+        docker tag dockerize-nest-app_db_mongo ${DOCKERHUB_USERNAME}/mongo:${{ github.sha }}
         docker push ${DOCKERHUB_USERNAME}/mongo:latest
         docker push ${DOCKERHUB_USERNAME}/mongo:${{ github.sha }}
-   # - name: Push Docker images with Docker Compose
-   #   run: |
-    #   docker-compose -f dockerize-nest-app/docker-compose.yaml push
-     #   docker-compose -f dockerize-nest-app/docker-compose.yaml images
 
     - name: Run Docker Compose
       run:  docker-compose -f dockerize-nest-app/docker-compose.yaml up -d
