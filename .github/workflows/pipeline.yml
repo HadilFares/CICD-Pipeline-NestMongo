@@ -23,13 +23,7 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: '18'
-
-    - name: Install dependencies
-      run: npm install
-
-    - name: Build the NestJS application
-      run: npm run build
+        node-version: '18'        
 
     - name: Check Docker Compose version
       run: docker-compose --version
@@ -44,10 +38,10 @@ jobs:
          password: ${{ secrets.DOCKERHUB_TOKEN }}
     
     - name: Build Docker images with Docker Compose
-      run: docker-compose -f docker-compose.yml build
+      run: docker-compose -f dockerize-nest-app/docker-compose.yaml build
 
     - name: Push Docker images with Docker Compose
-      run: docker-compose -f docker-compose.yml push
+      run: docker-compose -f dockerize-nest-app/docker-compose.yaml  push
 
     - name: Run Docker Compose
       run: docker-compose up -d
