@@ -20,8 +20,6 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
-      image: hadilfares/nest-app:latest
-
     ports:
       - '4000:3000'
     volumes:
