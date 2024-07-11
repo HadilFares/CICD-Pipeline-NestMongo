@@ -37,13 +37,13 @@ jobs:
     
     - name: Build   Docker images with Docker Compose
       run: |
-        docker-compose -f dockerize-nest-app/docker-compose.yaml build
+        docker-compose -f dockerize-nest-app/docker-compose.yaml up -d --build
         docker-compose -f dockerize-nest-app/docker-compose.yaml images
     - name: Push Docker images with Docker Compose
       run: |
         docker-compose -f dockerize-nest-app/docker-compose.yaml push
     
    
-    - name: Run Docker Compose
-      run:  docker-compose -f dockerize-nest-app/docker-compose.yaml up -d
+   # - name: Run Docker Compose
+   #   run:  docker-compose -f dockerize-nest-app/docker-compose.yaml up -d
 
