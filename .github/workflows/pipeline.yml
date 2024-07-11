@@ -38,6 +38,11 @@ jobs:
     - name: Build Docker images with Docker Compose
       run: docker-compose -f dockerize-nest-app/docker-compose.yaml build
 
+    - name: Build Docker images with Docker Compose
+      run: |
+        docker-compose -f dockerize-nest-app/docker-compose.yaml build \
+        --tag ${{ secrets.DOCKERHUB_USERNAME }}/nestmongo:latest
+
     - name: Push Docker images with Docker Compose
       run: |
         docker-compose -f dockerize-nest-app/docker-compose.yaml push
