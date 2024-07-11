@@ -30,6 +30,10 @@ jobs:
       with:
          username: ${{ secrets.DOCKERHUB_USERNAME }}
          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: Set environment variables
+      run: |
+        echo "DATABASE_URI=${{ secrets.DATABASE_URI }}" >> $GITHUB_ENV   
     
     - name: Build Docker images with Docker Compose
       run: docker-compose -f dockerize-nest-app/docker-compose.yaml build
