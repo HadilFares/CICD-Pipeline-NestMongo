@@ -10,12 +10,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    services:
-      mongo:
-        image: mongo:latest
-        ports:
-          - 27017:27017
-
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
@@ -44,5 +38,5 @@ jobs:
       run: docker-compose -f dockerize-nest-app/docker-compose.yaml  push
 
     - name: Run Docker Compose
-      run: docker-compose up -d
+      run:  docker-compose -f dockerize-nest-app/docker-compose.yaml up -d
 
