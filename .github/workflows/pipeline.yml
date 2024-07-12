@@ -41,6 +41,9 @@ jobs:
         docker-compose -f dockerize-nest-app/docker-compose.yaml images
     - name: Push Docker images with Docker Compose
       run: |
+        # Tag the built nest-app image
+        docker tag dockerize-nest-app_nest-app  ${{ secrets.DOCKERHUB_USERNAME }}/dockerize-nest-app:latest
+        docker tag mongo  ${{ secrets.DOCKERHUB_USERNAME }}/dockerize-mongo:latest
         docker-compose -f dockerize-nest-app/docker-compose.yaml push
     
    
