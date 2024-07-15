@@ -36,9 +36,9 @@ jobs:
       run: |
         echo "DATABASE_URI=${{ secrets.DATABASE_URI }}" >> $GITHUB_ENV   
 
-    -  name: Build and push
-       uses: docker/build-push-action@v2
-       with:
+    - name: Build and push
+      uses: docker/build-push-action@v2
+      with:
           context: ./dockerize-nest-app
           file: ./Dockerfile
           push: true
