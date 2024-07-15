@@ -52,7 +52,7 @@ jobs:
   #        docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/dockerize-nest-app:latest -f ./dockerize-nest-app/Dockerfile .
 #    - name: Push Docker images
  #     run: |
-        docker push ${{ secrets.DOCKERHUB_USERNAME }}/dockerize-nest-app:latest
+      #  docker push ${{ secrets.DOCKERHUB_USERNAME }}/dockerize-nest-app:latest
 
       
    
