@@ -19,9 +19,6 @@ jobs:
       with:
         node-version: '18'        
 
-    - name: Check Docker Compose version
-      run: docker-compose --version
-
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
     
@@ -34,21 +31,15 @@ jobs:
     - name: Set environment variables
       run: |
         echo "DATABASE_URI=${{ secrets.DATABASE_URI }}" >> $GITHUB_ENV   
-    
-    - name: Build   Docker images with Docker Compose
-      run: |
-        docker-compose -f dockerize-nest-app/docker-compose.yaml up -d --build
-        docker-compose -f dockerize-nest-app/docker-compose.yaml images
-    - name: Push Docker images with Docker Compose
-      run: |
-        # Tag the built nest-app image
-        docker tag dockerize-nest-app_nest-app  ${{ secrets.DOCKERHUB_USERNAME }}/dockerize-nest-app:latest
-        docker tag mongo  ${{ secrets.DOCKERHUB_USERNAME }}/dockerize-mongo:latest
-        docker push ${{ secrets.DOCKERHUB_USERNAME }}/dockerize-nest-app:latest
-        docker push ${{ secrets.DOCKERHUB_USERNAME }}/dockerize-mongo:latest
 
-      #docker-compose -f dockerize-nest-app/docker-compose.yaml push
-    
+    - name: Build and tag NestJS Docker image
+      run: |
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/dockerize-nest-app:latest -f dockerize-nest/Dockerfile .
+    - name: Push Docker images
+      run: |
+        docker push ${{ secrets.DOCKERHUB_USERNAME }}/dockerize-nest-app:latest
+
+      
    
    # - name: Run Docker Compose
    #   run:  docker-compose -f dockerize-nest-app/docker-compose.yaml up -d
